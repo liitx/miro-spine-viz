@@ -192,54 +192,42 @@ const MiroSpineViz = () => {
               style={{ transition: 'all 0.3s ease' }}
             />
 
-            {/* Vertebrae markers */}
-            {[50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275].map((x, i) => (
-              <circle
-                key={i}
-                cx={x}
-                cy={72 - Math.sin((x - 50) / 40) * 20}
-                r="3"
-                fill="#555"
-              />
-            ))}
-
-            {/* Affected disc regions - highlighted */}
-            {discRegions.map(region => (
-              <g key={region.id}>
-                {/* Glow effect when active */}
-                {isRegionActive(region.id) && (
-                  <circle
-                    cx={region.x}
-                    cy={region.y}
-                    r="18"
-                    fill="rgba(255, 68, 68, 0.2)"
-                    style={{
-                      animation: 'pulse 1.5s ease-in-out infinite',
-                    }}
-                  />
-                )}
-                
-                {/* Disc marker */}
+            {/* Vertebrae markers along the spine */}
+            {[50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275].map((x, i) => {
+              const y = 72 - Math.sin((x - 50) / 40) * 20;
+              
+              // Check if this vertebra is at a disc region position
+              const isAtDiscRegion = discRegions.some(region => 
+                Math.abs(region.x - x) < 10 && isRegionActive(region.id)
+              );
+              
+              return (
                 <circle
-                  cx={region.x}
-                  cy={region.y}
-                  r="10"
-                  fill={getRegionColor(region.id)}
-                  stroke="#fff"
-                  strokeWidth={isRegionActive(region.id) ? "2" : "1"}
+                  key={i}
+                  cx={x}
+                  cy={y}
+                  r={isAtDiscRegion ? "5" : "3"}
+                  fill={isAtDiscRegion ? "#ff4444" : "#555"}
+                  stroke={isAtDiscRegion ? "#fff" : "none"}
+                  strokeWidth={isAtDiscRegion ? "1.5" : "0"}
                   style={{
-                    cursor: 'pointer',
                     transition: 'all 0.3s ease',
-                    filter: isRegionActive(region.id) ? 'drop-shadow(0 0 8px #ff4444)' : 'none',
+                    filter: isAtDiscRegion ? 'drop-shadow(0 0 6px #ff4444)' : 'none',
                   }}
-                  onMouseEnter={() => setHoveredRegion(region.id)}
-                  onMouseLeave={() => setHoveredRegion(null)}
                 />
-                
-                {/* Label */}
+              );
+            })}
+
+            {/* Labels for disc regions */}
+            {discRegions.map((region, idx) => {
+              // Stagger labels to prevent overlap
+              const yOffset = idx === 0 ? 10 : (idx === 1 ? 55 : 20);
+              
+              return (
                 <text
+                  key={region.id}
                   x={region.x}
-                  y={region.y + 28}
+                  y={region.y + yOffset}
                   textAnchor="middle"
                   fontSize="10"
                   fill={isRegionActive(region.id) ? '#ff6666' : '#888'}
@@ -248,8 +236,8 @@ const MiroSpineViz = () => {
                 >
                   {region.label}
                 </text>
-              </g>
-            ))}
+              );
+            })}
           </g>
         </svg>
 
