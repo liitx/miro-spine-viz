@@ -30,7 +30,7 @@ const MiroSpineViz = () => {
       description: 'Neck extension compresses C4-C6 discs. This may cause pain or reluctance.',
       regions: ['c4-c6'],
       spineOffset: 0,
-      headRotation: -25,
+      headRotation: 25,
     },
     {
       id: 'looking-down',
@@ -39,7 +39,7 @@ const MiroSpineViz = () => {
       description: 'Neck flexion stretches C4-C6. Eating from floor bowl activates this.',
       regions: ['c4-c6'],
       spineOffset: 0,
-      headRotation: 20,
+      headRotation: -25,
     },
     {
       id: 'jumping',
@@ -47,8 +47,8 @@ const MiroSpineViz = () => {
       icon: '⬆️',
       description: 'HIGH IMPACT: Landing compresses ALL affected discs. Avoid this movement.',
       regions: ['c4-c6', 't12-t13', 't13-l1'],
-      spineOffset: -8,
-      headRotation: -10,
+      spineOffset: -30,
+      headRotation: -15,
     },
     {
       id: 'climbing',
