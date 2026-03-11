@@ -179,19 +179,6 @@ const MiroSpineViz = () => {
             <rect x="220" y="115" width="12" height="40" rx="4" fill="#2a2a3a" stroke="#3a3a4a"/>
             <rect x="245" y="115" width="12" height="35" rx="4" fill="#252535" stroke="#3a3a4a"/>
 
-            {/* SPINE - The main feature */}
-            <path
-              d="M 50 72 
-                 C 70 68, 90 60, 120 55 
-                 C 150 50, 180 48, 210 50 
-                 C 240 52, 260 58, 275 65"
-              stroke="#888"
-              strokeWidth="4"
-              fill="none"
-              strokeLinecap="round"
-              style={{ transition: 'all 0.3s ease' }}
-            />
-
             {/* Vertebrae markers along the spine */}
             {[50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275].map((x, i) => {
               const y = 72 - Math.sin((x - 50) / 40) * 20;
